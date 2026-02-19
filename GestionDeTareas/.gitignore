@@ -1,0 +1,47 @@
+## Visual Studio
+.vs/
+.vs/**/FileContentIndex/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Rm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Rider
+.idea/
+
+## VS Code
+.vscode/
+
+## Database
+*.mdf
+*.ldf
+*.ndf
+
+## Sensitive data
+appsettings.Development.json
+appsettings.Production.json
+**/appsettings.*.json
+!**/appsettings.json
+
+## macOS
+.DS_Store
