@@ -1,7 +1,9 @@
-﻿namespace GestionDeTareas.Services
+﻿using GestionDeTareas.Models;
+
+namespace GestionDeTareas.Services
 {
     public interface ITokenService
     {
-        string GenerarToken(string email, string userId);
+        Task<string> GenerarToken(Usuario usuario);
     }
 }

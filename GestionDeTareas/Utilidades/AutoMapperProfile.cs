@@ -14,7 +14,9 @@ namespace GestionDeTareas.Utilidades
                 .ForMember(dest => dest.Estado, config => config.MapFrom(src => src.Estado.ToString()))
                 .ForMember(dest => dest.Prioridad, config => config.MapFrom(src => src.Prioridad.ToString()))
                 .ForMember(dest => dest.CategoriaNombre,
-                opt => opt.MapFrom(src => src.Categoria != null ? src.Categoria.Nombre : null));
+                opt => opt.MapFrom(src => src.Categoria != null ? src.Categoria.Nombre : null))
+                .ForMember(dest => dest.UsuarioAsignadoNombre, opt => opt.MapFrom(src => src.Usuario != null ? src.Usuario.Nombre : null))  // ← NUEVO
+                .ForMember(dest => dest.UsuarioAsignadoEmail, opt => opt.MapFrom(src => src.Usuario != null ? src.Usuario.Email : null));
 
             CreateMap<Tarea, TareaDetalleDTO>();
 
@@ -37,8 +39,8 @@ namespace GestionDeTareas.Utilidades
 
             CreateMap<Usuario, UsuarioDTO>()
                 .ForMember(des => des.NombreApellido, config => config.MapFrom(usuario => $"{usuario.Nombre} {usuario.Apellido}")).ReverseMap();
+            CreateMap<UsuarioDTO, Usuario>();
 
-            
         }
     }
 }

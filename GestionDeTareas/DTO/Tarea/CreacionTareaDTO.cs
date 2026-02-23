@@ -10,6 +10,7 @@ namespace GestionDeTareas.DTO.Tarea
         public string Titulo { get; set; } = null!;
         public string? Prioridad { get; set; }
         public int? IdCategoria { get; set; }
+        public string? IdUsuario { get; set; }
 
     }
 }

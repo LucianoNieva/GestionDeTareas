@@ -1,6 +1,7 @@
 ﻿using GestionDeTareas.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace GestionDeTareas.Datos
 {
@@ -17,26 +18,35 @@ namespace GestionDeTareas.Datos
         {
             base.OnModelCreating(builder);  // ← IMPORTANTE: llamar al base
 
-            // Configurar relación Usuario-Tareas
             builder.Entity<Tarea>()
-                .HasOne(t => t.Usuario)
-                .WithMany(u => u.Tareas)
-                .HasForeignKey(t => t.IdUsuario)
-                .OnDelete(DeleteBehavior.Cascade);
+                 .HasOne(t => t.Admin)
+                 .WithMany(u => u.Tareas)
+                 .HasForeignKey(t => t.IdAdmin)
+                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Configurar relación Categoria-Tareas
-            builder.Entity<Tarea>()
+            // Relación: Tarea -> UsuarioAsignado (a quien se asignó)
+           builder.Entity<Tarea>()
+                .HasOne(t => t.Usuario)
+                .WithMany()  // Sin colección inversa en Usuario
+                .HasForeignKey(t => t.IdUsuario)
+                .IsRequired(false)  // Puede ser NULL
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // Relación: Tarea -> Categoria
+           builder.Entity<Tarea>()
                 .HasOne(t => t.Categoria)
                 .WithMany(c => c.TareasEnCategoria)
                 .HasForeignKey(t => t.IdCategoria)
-                .OnDelete(DeleteBehavior.NoAction);
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.SetNull);
 
-            // Configurar relación Usuario-Categorias
+            // ========== CONFIGURACIÓN DE CATEGORIA ==========
+
             builder.Entity<Categoria>()
                 .HasOne(c => c.Usuario)
                 .WithMany(u => u.Categorias)
                 .HasForeignKey(c => c.IdUsuario)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

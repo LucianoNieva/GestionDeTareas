@@ -59,11 +59,14 @@ namespace GestionDeTareas.Migrations
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("IdAdmin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int?>("IdCategoria")
                         .HasColumnType("int");
 
                     b.Property<string>("IdUsuario")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Prioridad")
@@ -74,6 +77,8 @@ namespace GestionDeTareas.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdAdmin");
 
                     b.HasIndex("IdCategoria");
 
@@ -295,7 +300,7 @@ namespace GestionDeTareas.Migrations
                     b.HasOne("GestionDeTareas.Models.Usuario", "Usuario")
                         .WithMany("Categorias")
                         .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Usuario");
@@ -303,16 +308,23 @@ namespace GestionDeTareas.Migrations
 
             modelBuilder.Entity("GestionDeTareas.Models.Tarea", b =>
                 {
+                    b.HasOne("GestionDeTareas.Models.Usuario", "Admin")
+                        .WithMany("Tareas")
+                        .HasForeignKey("IdAdmin")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("GestionDeTareas.Models.Categoria", "Categoria")
                         .WithMany("TareasEnCategoria")
                         .HasForeignKey("IdCategoria")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("GestionDeTareas.Models.Usuario", "Usuario")
-                        .WithMany("Tareas")
+                        .WithMany()
                         .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Admin");
 
                     b.Navigation("Categoria");
 

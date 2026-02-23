@@ -3,6 +3,7 @@ using GestionDeTareas.Datos;
 using GestionDeTareas.DTO.Tarea;
 using GestionDeTareas.Models;
 using GestionDeTareas.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestionDeTareas.Services
@@ -11,15 +12,18 @@ namespace GestionDeTareas.Services
     {
         private readonly ITareaRepository _tareaRepository;
         private readonly ICategoryRepository _categoriaRepository;
+        private readonly IUsuarioService _userManager;
         private readonly IMapper _mapper;
 
         public TareaService(
-            ITareaRepository tareaRepository,
-            ICategoryRepository categoriaRepository,
-            IMapper mapper)
+        ITareaRepository tareaRepository,
+        ICategoryRepository categoriaRepository,
+        IUsuarioService userManager,
+        IMapper mapper)
         {
             _tareaRepository = tareaRepository;
             _categoriaRepository = categoriaRepository;
+            _userManager = userManager;
             _mapper = mapper;
         }
 
@@ -40,6 +44,13 @@ namespace GestionDeTareas.Services
             return _mapper.Map<TareaDetalleDTO>(tarea);
         }
 
+        public async Task<List<TareaDTO>?> ObtenerTareasSegunRol(string userId, bool esAdmin)
+        {
+            var tareas = await _tareaRepository.ObtenerTareasSegunRol(userId, esAdmin);
+            if (tareas == null) return null;
+            return _mapper.Map<List<TareaDTO>>(tareas);
+        }   
+
         public async Task<(bool exito, string? error, TareaDTO? tarea)> CrearTarea(CreacionTareaDTO creacionTarea, string userId)
         {
             if(creacionTarea.IdCategoria.HasValue)
@@ -49,8 +60,16 @@ namespace GestionDeTareas.Services
                 if (categoriaExiste == null) return (false, "La categoria no existe", null);
             }
 
+            if (!string.IsNullOrEmpty(creacionTarea.IdUsuario))
+            {
+                if (!await _userManager.ExisteUsuarioAsync(creacionTarea.IdUsuario))
+                {
+                    return (false, "El usuario asignado no existe", null);
+                }
+            }
+
             var tarea = _mapper.Map<Tarea>(creacionTarea);
-            tarea.IdUsuario = userId;
+            tarea.IdAdmin = userId;
 
             await _tareaRepository.Add(tarea);
             await _tareaRepository.Save();

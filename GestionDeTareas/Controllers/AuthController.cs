@@ -49,7 +49,9 @@ namespace GestionDeTareas.Controllers
 
                 if (!resultado.Succeeded) return BadRequest(resultado.Errors);
 
-                var token = _tokenService.GenerarToken(usuario.Email!, usuario.Id);
+                await _userManager.AddToRoleAsync(usuario, "Usuario");
+
+                var token = await _tokenService.GenerarToken(usuario);
 
                 _logger.LogInformation($"Usuario registrado exitosamente: {usuario.Email}");
 
@@ -98,7 +100,7 @@ namespace GestionDeTareas.Controllers
 
                 await _userManager.ResetAccessFailedCountAsync(usuario);
 
-                var token = _tokenService.GenerarToken(usuario.Email!, usuario.Id);
+                var token = await _tokenService.GenerarToken(usuario);
 
                 _logger.LogInformation("Usuario inició sesión: {Email}", usuario.Email);
 
@@ -114,6 +116,84 @@ namespace GestionDeTareas.Controllers
             {
                 _logger.LogError(ex, "Error al iniciar sesión");
                 return StatusCode(500);
+            }
+        }
+
+
+        [HttpPost("setup/roles")]
+        public async Task<ActionResult> CrearRoles(
+            [FromServices] RoleManager<IdentityRole> roleManager)
+        {
+            try
+            {
+                // Crear rol Admin
+                if (!await roleManager.RoleExistsAsync("Admin"))
+                {
+                    await roleManager.CreateAsync(new IdentityRole("Admin"));
+                }
+
+                // Crear rol Usuario
+                if (!await roleManager.RoleExistsAsync("Usuario"))
+                {
+                    await roleManager.CreateAsync(new IdentityRole("Usuario"));
+                }
+
+                return Ok(new
+                {
+                    message = "Roles creados exitosamente",
+                    roles = new[] { "Admin", "Usuario" }
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al crear roles");
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("setup/crear-admin")]
+        public async Task<ActionResult<AuthResponseDTO>> CrearPrimerAdmin(RegisterDTO dto)
+        {
+            try
+            {
+                var usuarioExiste = await _userManager.FindByEmailAsync(dto.Email);
+                if (usuarioExiste != null)
+                    return BadRequest(new { message = "El email ya está registrado" });
+
+                var usuario = new Usuario
+                {
+                    UserName = dto.Email,
+                    Email = dto.Email,
+                    Nombre = dto.Nombre
+                };
+
+                var resultado = await _userManager.CreateAsync(usuario, dto.Password);
+
+                if (!resultado.Succeeded)
+                {
+                    var errores = resultado.Errors.Select(e => e.Description);
+                    return BadRequest(new { message = "Error al crear usuario", errores });
+                }
+
+                // ✅ ASIGNAR ROL ADMIN
+                await _userManager.AddToRoleAsync(usuario, "Admin");
+
+                var token = await _tokenService.GenerarToken(usuario);
+
+                _logger.LogInformation("ADMIN creado exitosamente: {Email}", usuario.Email);
+
+                return Ok(new AuthResponseDTO
+                {
+                    Token = token,
+                    Email = usuario.Email!,
+                    Nombre = usuario.Nombre,
+                    Expiracion = DateTime.UtcNow.AddDays(7)
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al crear admin");
+                return StatusCode(500, new { message = "Error al crear admin" });
             }
         }
     }

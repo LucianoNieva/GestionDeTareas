@@ -1,6 +1,8 @@
 ﻿using GestionDeTareas.Datos;
+using GestionDeTareas.DTO.Tarea;
 using GestionDeTareas.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata.Ecma335;
 
 namespace GestionDeTareas.Repository
 {
@@ -100,6 +102,33 @@ namespace GestionDeTareas.Repository
         {
             return await dbSet
                 .CountAsync(t => t.IdUsuario == userId && t.Estado == estado);
+        }
+
+        public async Task<List<Tarea>> ObtenerTareasSegunRol(string userId, bool esAdmin)
+        {
+            List<Tarea> tareas;
+
+            if (esAdmin)
+            {
+                // Admin ve TODAS las tareas
+                tareas = await dbSet
+                    .Include(t => t.Categoria)
+                    .Include(t => t.Usuario)  // ← NUEVO
+                    .OrderByDescending(t => t.FechaCreacion)
+                    .ToListAsync();
+            }
+            else
+            {
+                // Usuario normal ve solo las asignadas a él
+                tareas = await dbSet
+                    .Include(t => t.Categoria)
+                    .Include(t => t.Usuario)
+                    .Where(t => t.IdUsuario == userId)
+                    .OrderByDescending(t => t.FechaCreacion)
+                    .ToListAsync();
+            }
+
+            return tareas;
         }
 
 

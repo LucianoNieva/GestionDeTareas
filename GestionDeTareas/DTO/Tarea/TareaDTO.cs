@@ -11,5 +11,9 @@ namespace GestionDeTareas.DTO.Tarea
         public DateTime FechaCreacion { get; set; }
         public int? IdCategoria { get; set; }
         public string? CategoriaNombre { get; set; }
+
+        public string? IdUsuario { get; set; }
+        public string? UsuarioAsignadoNombre { get; set; }
+        public string? UsuarioAsignadoEmail { get; set; }
     }
 }

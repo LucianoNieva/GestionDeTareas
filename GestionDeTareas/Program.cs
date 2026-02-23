@@ -6,6 +6,7 @@ using GestionDeTareas.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -21,7 +22,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ITareaRepository, TareaRepository>();
 
-builder.Services.AddIdentityCore<Usuario>(options =>
+
+
+builder.Services.AddIdentity<Usuario, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
@@ -63,6 +66,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService >();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<TareaService>();

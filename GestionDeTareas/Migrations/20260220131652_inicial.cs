@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GestionDeTareas.Migrations
 {
     /// <inheritdoc />
-    public partial class InicialConIdentity : Migration
+    public partial class inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -176,7 +176,7 @@ namespace GestionDeTareas.Migrations
                         column: x => x.IdUsuario,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -189,23 +189,31 @@ namespace GestionDeTareas.Migrations
                     Estado = table.Column<int>(type: "int", nullable: false),
                     Prioridad = table.Column<int>(type: "int", nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdUsuario = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IdAdmin = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IdUsuario = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IdCategoria = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tareas", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Tareas_AspNetUsers_IdAdmin",
+                        column: x => x.IdAdmin,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Tareas_AspNetUsers_IdUsuario",
                         column: x => x.IdUsuario,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Tareas_Categoria_IdCategoria",
                         column: x => x.IdCategoria,
                         principalTable: "Categoria",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(
@@ -251,6 +259,11 @@ namespace GestionDeTareas.Migrations
                 name: "IX_Categoria_IdUsuario",
                 table: "Categoria",
                 column: "IdUsuario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tareas_IdAdmin",
+                table: "Tareas",
+                column: "IdAdmin");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tareas_IdCategoria",

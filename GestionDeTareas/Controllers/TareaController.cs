@@ -1,9 +1,11 @@
 ﻿using GestionDeTareas.Datos;
 using GestionDeTareas.DTO.Tarea;
+using GestionDeTareas.DTO.Usuario;
 using GestionDeTareas.Models;
 using GestionDeTareas.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -29,11 +31,9 @@ namespace GestionDeTareas.Controllers
         [HttpGet]
         public async Task<ActionResult<List<TareaDTO>>> GetMisTareas()
         {
-            
-                var tareas = await _tareaService.ObtenerTareasUsuario(_currentUser.UserId);
-                return Ok(tareas);
-            
-            
+            var esAdmin = _currentUser.IsInRole("Admin");
+            var tareas = await _tareaService.ObtenerTareasSegunRol(_currentUser.UserId, esAdmin);
+            return Ok(tareas);
         }
 
         [HttpGet("{id}", Name = "ObtenerTarea")]
@@ -48,6 +48,7 @@ namespace GestionDeTareas.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CrearTarea(CreacionTareaDTO dto)
         {
             try
@@ -73,6 +74,7 @@ namespace GestionDeTareas.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> ActualizarTarea(int id, ActualizarTareaDTO dto)
         {
             try
@@ -94,6 +96,7 @@ namespace GestionDeTareas.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> BorrarTarea(int id)
         {
             try
@@ -159,6 +162,9 @@ namespace GestionDeTareas.Controllers
             }
 
         }
+
+        
+        
 
 
 

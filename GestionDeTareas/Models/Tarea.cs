@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace GestionDeTareas.Models
 {
     
@@ -11,9 +13,10 @@ namespace GestionDeTareas.Models
         public Estado Estado { get; set; } = Estado.Pendiente;
         public Prioridad Prioridad{ get; set; }
         public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
-        public string IdUsuario { get; set; } = null!;
-        public Usuario Usuario { get; set; } = null!;
-
+        public string IdAdmin { get; set; } = null!;
+        public Usuario Admin { get; set; } = null!;
+        public string? IdUsuario { get; set; }
+        public Usuario? Usuario { get; set; }
         public int? IdCategoria { get; set; }
         public Categoria? Categoria { get; set; }
 
