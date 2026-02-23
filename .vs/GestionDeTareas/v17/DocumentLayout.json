@@ -1,12 +1,85 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|c:\\users\\desktop\\source\\repos\\gestiondetareas\\gestiondetareas\\controllers\\tareacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|solutionrelative:gestiondetareas\\controllers\\tareacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|c:\\users\\desktop\\source\\repos\\gestiondetareas\\gestiondetareas\\repository\\tarearepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|solutionrelative:gestiondetareas\\repository\\tarearepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|c:\\users\\desktop\\source\\repos\\gestiondetareas\\gestiondetareas\\services\\tareaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|solutionrelative:gestiondetareas\\services\\tareaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|c:\\users\\desktop\\source\\repos\\gestiondetareas\\gestiondetareas\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|solutionrelative:gestiondetareas\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TareaController.cs",
+              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Controllers\\TareaController.cs",
+              "RelativeDocumentMoniker": "GestionDeTareas\\Controllers\\TareaController.cs",
+              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Controllers\\TareaController.cs",
+              "RelativeToolTip": "GestionDeTareas\\Controllers\\TareaController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T15:08:55.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TareaRepository.cs",
+              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Repository\\TareaRepository.cs",
+              "RelativeDocumentMoniker": "GestionDeTareas\\Repository\\TareaRepository.cs",
+              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Repository\\TareaRepository.cs",
+              "RelativeToolTip": "GestionDeTareas\\Repository\\TareaRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T15:08:48.194Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Program.cs",
+              "RelativeDocumentMoniker": "GestionDeTareas\\Program.cs",
+              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Program.cs",
+              "RelativeToolTip": "GestionDeTareas\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T15:04:41.771Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TareaService.cs",
+              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Services\\TareaService.cs",
+              "RelativeDocumentMoniker": "GestionDeTareas\\Services\\TareaService.cs",
+              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Services\\TareaService.cs",
+              "RelativeToolTip": "GestionDeTareas\\Services\\TareaService.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAIwEIAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T15:04:25.928Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
