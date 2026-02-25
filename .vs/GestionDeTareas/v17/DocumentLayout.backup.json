@@ -3,20 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Migrations\\20260225033215_CambioCategorias.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GestionDeTareas\\Migrations\\20260225033215_CambioCategorias.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|c:\\users\\desktop\\source\\repos\\gestiondetareas\\gestiondetareas\\controllers\\categoriascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|solutionrelative:gestiondetareas\\controllers\\categoriascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|c:\\users\\desktop\\source\\repos\\gestiondetareas\\gestiondetareas\\controllers\\tareacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|solutionrelative:gestiondetareas\\controllers\\tareacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|c:\\users\\desktop\\source\\repos\\gestiondetareas\\gestiondetareas\\models\\tarea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|solutionrelative:gestiondetareas\\models\\tarea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|c:\\users\\desktop\\source\\repos\\gestiondetareas\\gestiondetareas\\services\\tareaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|solutionrelative:gestiondetareas\\services\\tareaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|c:\\users\\desktop\\source\\repos\\gestiondetareas\\gestiondetareas\\services\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB84C3D4-60EA-49F3-94FE-17A6C270FD31}|GestionDeTareas\\GestionDeTareas.csproj|solutionrelative:gestiondetareas\\services\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20260225033215_CambioCategorias.cs",
-              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Migrations\\20260225033215_CambioCategorias.cs",
-              "RelativeDocumentMoniker": "GestionDeTareas\\Migrations\\20260225033215_CambioCategorias.cs",
-              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Migrations\\20260225033215_CambioCategorias.cs",
-              "RelativeToolTip": "GestionDeTareas\\Migrations\\20260225033215_CambioCategorias.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-25T03:32:16.078Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Tarea.cs",
-              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Models\\Tarea.cs",
-              "RelativeDocumentMoniker": "GestionDeTareas\\Models\\Tarea.cs",
-              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Models\\Tarea.cs",
-              "RelativeToolTip": "GestionDeTareas\\Models\\Tarea.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-25T03:31:55.023Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "TareaController.cs",
-              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Controllers\\TareaController.cs",
-              "RelativeDocumentMoniker": "GestionDeTareas\\Controllers\\TareaController.cs",
-              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Controllers\\TareaController.cs",
-              "RelativeToolTip": "GestionDeTareas\\Controllers\\TareaController.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAwwEMAAAAAAAAAAAAAAA==",
+              "Title": "CategoryService.cs",
+              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Services\\CategoryService.cs",
+              "RelativeDocumentMoniker": "GestionDeTareas\\Services\\CategoryService.cs",
+              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Services\\CategoryService.cs",
+              "RelativeToolTip": "GestionDeTareas\\Services\\CategoryService.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAowDAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-25T03:30:26.174Z",
+              "WhenOpened": "2026-02-25T15:08:48.902Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "TareaService.cs",
-              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Services\\TareaService.cs",
-              "RelativeDocumentMoniker": "GestionDeTareas\\Services\\TareaService.cs",
-              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Services\\TareaService.cs",
-              "RelativeToolTip": "GestionDeTareas\\Services\\TareaService.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAIwHgAAAAJAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "CategoriasController.cs",
+              "DocumentMoniker": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Controllers\\CategoriasController.cs",
+              "RelativeDocumentMoniker": "GestionDeTareas\\Controllers\\CategoriasController.cs",
+              "ToolTip": "C:\\Users\\DESKTOP\\source\\repos\\GestionDeTareas\\GestionDeTareas\\Controllers\\CategoriasController.cs*",
+              "RelativeToolTip": "GestionDeTareas\\Controllers\\CategoriasController.cs*",
+              "ViewState": "AgIAADUAAAAAAAAAAAAwwEwAAABgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-25T03:23:24.584Z",
+              "WhenOpened": "2026-02-25T15:05:56.81Z",
               "EditorCaption": ""
             }
           ]

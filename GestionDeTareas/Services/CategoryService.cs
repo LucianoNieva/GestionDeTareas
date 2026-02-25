@@ -48,7 +48,7 @@ namespace GestionDeTareas.Services
             await categoryRepository.Save();
 
             var categoriaDTO = mapper.Map<CategoryDTO>(categoria);
-
+            
             return (true, null, categoriaDTO);
         }
 

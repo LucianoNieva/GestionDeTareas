@@ -72,7 +72,7 @@ namespace GestionDeTareas.Controllers
                 if (!exito)
                     return BadRequest(new { message = error });
 
-                _logger.LogInformation("Categoría creada: {CategoriaId}}", categoria!.Id);
+                _logger.LogInformation("Categoría creada: {CategoriaId}", categoria!.Id);
 
                 return CreatedAtRoute("ObtenerCategoria", new { id = categoria.Id }, categoria);
             }
