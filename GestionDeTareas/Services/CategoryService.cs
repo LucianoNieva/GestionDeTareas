@@ -7,7 +7,7 @@ using Org.BouncyCastle.Asn1.IsisMtt.X509;
 
 namespace GestionDeTareas.Services
 {
-    public class CategoryService
+    public class CategoryService:ICategoryService
     {
         private readonly ICategoryRepository categoryRepository;
         private readonly IMapper mapper;
@@ -18,23 +18,23 @@ namespace GestionDeTareas.Services
             this.mapper = mapper;
         }
 
-        public async Task<List<CategoryDTO>> ObtenerCategoriasUsuario(string userId)
+        public async Task<List<CategoryDTO>> ObtenerTodasLasCategorias()
         {
-            var categorias = await categoryRepository.ObtenerTodasConTareas(userId);
+            var categorias = await categoryRepository.ObtenerTodas();
             return mapper.Map<List<CategoryDTO>>(categorias);
         }
 
-        public async Task<CategoryDTO?> ObtenerCategoriaPorId(int id, string userId)
+        public async Task<CategoryDTO?> ObtenerCategoriaPorId(int id)
         {
-            var categoria = await categoryRepository.ObtenerConTareas(id, userId);
+            var categoria = await categoryRepository.ObtenerPorId(id);
             return mapper.Map<CategoryDTO>(categoria);
         }
 
-        public async Task<(bool exito, string? error, CategoryDTO? categoria)> CrearCategoria(
-            CategoryCreacionDTO dto, string userId)
+        public async Task<(bool exito, string? error, CategoryDTO? categoria)> CrearCategoriaGlobal(
+            CategoryCreacionDTO dto)
         {
             // Validar nombre duplicado
-            var existe = await categoryRepository.ExisteConNombre(dto.Nombre, userId);
+            var existe = await categoryRepository.Existe(dto.Nombre);
 
             if (existe)
             {
@@ -43,7 +43,6 @@ namespace GestionDeTareas.Services
 
             // Crear categoría
             var categoria = mapper.Map<Categoria>(dto);
-            categoria.IdUsuario = userId;
 
             await categoryRepository.Add(categoria);
             await categoryRepository.Save();
@@ -53,13 +52,13 @@ namespace GestionDeTareas.Services
             return (true, null, categoriaDTO);
         }
 
-        public async Task<(bool exito, string? error)> ActualizarCategoria(int id, CategoryCreacionDTO dto, string userId)
+        public async Task<(bool exito, string? error)> ActualizarCategoria(int id, CategoryCreacionDTO dto)
         {
-            var categoria = await categoryRepository.ObtenerPorIdYUsuario(id, userId);
+            var categoria = await categoryRepository.ObtenerPorId(id);
 
             if (categoria == null) return (false, "Categoria no encontrada");
 
-            var existeNombre = await categoryRepository.ExisteConNombreExcluyendo(dto.Nombre, userId, id);
+            var existeNombre = await categoryRepository.ExisteConNombreExcluyendo(dto.Nombre, id);
 
             if (existeNombre) return (false, "Ya existe otra categoria con ese nombre");
             mapper.Map(dto, categoria);
@@ -69,9 +68,9 @@ namespace GestionDeTareas.Services
             return (true, null);
         }
 
-        public async Task<(bool exito, string? error)> EliminarCategoria(int id, string userId)
+        public async Task<(bool exito, string? error)> EliminarCategoria(int id)
         {
-            var categoria = await categoryRepository.ObtenerConTareas(id, userId);
+            var categoria = await categoryRepository.ObtenerConTareas(id);
 
             if (categoria == null) return (false, "Categoria no encontrada");
 
@@ -83,9 +82,9 @@ namespace GestionDeTareas.Services
             return (true, null);
         }
 
-        public async Task<object?> ObtenerTareasDeCategoria(int id, string userId)
+        public async Task<object?> ObtenerTareasDeCategoria(int id)
         {
-            var categoria = await categoryRepository.ObtenerConTareas(id, userId);
+            var categoria = await categoryRepository.ObtenerConTareas(id);
 
             if (categoria == null)
                 return null;
@@ -99,7 +98,8 @@ namespace GestionDeTareas.Services
                     t.Id,
                     t.Titulo,
                     t.Estado,
-                    t.Prioridad
+                    t.Prioridad,
+                    t.IdUsuario
                 })
             };
         }

@@ -68,7 +68,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService >();
 builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<ICategoryService,CategoryService>();
 builder.Services.AddScoped<TareaService>();
 
 builder.Services.AddEndpointsApiExplorer();

@@ -8,8 +8,5 @@ namespace GestionDeTareas.Models
         public string? Apellido { get; set; }
         public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
         public List<Tarea> Tareas { get; set; } = new List<Tarea>();
-
-        public List<Categoria> Categorias { get; set; } = new List<Categoria>();
-
     }
 }

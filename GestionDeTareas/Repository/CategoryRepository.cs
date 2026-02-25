@@ -9,49 +9,43 @@ namespace GestionDeTareas.Repository
     {
         public CategoryRepository(ApplicationDbContext context) : base(context) { }
 
-        public async Task<List<Categoria>> ObtenerPorUsuario(string userId)
+        public async Task<List<Categoria>> ObtenerTodas()
         {
             return await dbSet
-                .Where(c => c.IdUsuario == userId)
                 .OrderBy(c => c.Nombre)
                 .ToListAsync();
         }
 
-        public async Task<Categoria?> ObtenerPorIdYUsuario(int id, string userId)
+        public async Task<Categoria?> ObtenerPorId(int id)
         {
-            return await dbSet.FirstOrDefaultAsync(c => c.Id == id && c.IdUsuario == userId);
+            return await dbSet.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<Categoria?> ObtenerConTareas(int id, string userId)
+        public async Task<Categoria?> ObtenerConTareas(int id)
         {
-            return await dbSet.Include(c => c.TareasEnCategoria).FirstOrDefaultAsync(c => c.Id == id && c.IdUsuario == userId); 
+            return await dbSet
+                .Include(c => c.TareasEnCategoria)
+                .FirstOrDefaultAsync(c => c.Id == id); 
         }
 
-        public async Task<List<Categoria>> ObtenerTodasConTareas(string userId)
+        public async Task<List<Categoria>> ObtenerTodasConTareas()
         {
-            return await dbSet.Where(c => c.IdUsuario == userId)
+            return await dbSet
                 .Include(c => c.TareasEnCategoria)
                 .OrderBy(c => c.Nombre)
                 .ToListAsync();
+
         }
 
-        public async Task<bool> Exist(string nombre, string userId)
+        public async Task<bool> Existe(string nombre)
         {
-            return await dbSet.AnyAsync(c => c.Nombre == nombre && c.IdUsuario == userId);
+            return await dbSet.AnyAsync(c => c.Nombre == nombre);
         }
 
-        public async Task<bool> ExisteConNombre(string nombre, string userId)
-        {
-            return await dbSet
-                .AnyAsync(c => c.Nombre == nombre && c.IdUsuario == userId);
-        }
-
-        public async Task<bool> ExisteConNombreExcluyendo(string nombre, string userId, int idExcluir)
+        public async Task<bool> ExisteConNombreExcluyendo(string nombre, int idExcluir)
         {
             return await dbSet
-                .AnyAsync(c => c.Nombre == nombre
-                            && c.IdUsuario == userId
-                            && c.Id != idExcluir);
+                .AnyAsync(c => c.Nombre == nombre && c.Id != idExcluir);
         }
 
     }

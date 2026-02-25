@@ -19,12 +19,14 @@ namespace GestionDeTareas.Controllers
         private readonly TareaService _tareaService;
         private readonly ICurrentUserService _currentUser;
         private readonly ILogger<TareaController> _logger;
+        private readonly IUsuarioService _usuarioService;
 
-        public TareaController(TareaService tareaService, ICurrentUserService currentUser, ILogger<TareaController> logger)
+        public TareaController(TareaService tareaService, ICurrentUserService currentUser, ILogger<TareaController> logger, IUsuarioService usuarioService)
         {
             _tareaService = tareaService;
             _currentUser = currentUser;
             _logger = logger;
+            _usuarioService = usuarioService;
         }
 
         
@@ -53,7 +55,7 @@ namespace GestionDeTareas.Controllers
         {
             try
             {
-                var (exito, error, tarea) = await _tareaService.CrearTarea(dto, _currentUser.UserId);
+                var (exito, error, tarea) = await _tareaService.CrearTarea(dto);
 
                 if (!exito)
                     return BadRequest(new { message = error });
@@ -99,6 +101,7 @@ namespace GestionDeTareas.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> BorrarTarea(int id)
         {
+
             try
             {
                 var (exito, error) = await _tareaService.EliminarTarea(id, _currentUser.UserId);
@@ -106,15 +109,17 @@ namespace GestionDeTareas.Controllers
                 if (!exito)
                     return NotFound(new { message = error });
 
-                _logger.LogInformation("Tarea eliminada: {TareaId} por usuario {UserId}", id, _currentUser.UserId);
+                _logger.LogInformation("Tarea eliminada: {TareaId} por Admin {UserId}", id, _currentUser.UserId);
 
                 return NoContent();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al eliminar tarea {TareaId}", id);
-                return StatusCode(500);
+                return StatusCode(500, new { message = "Error al eliminar tarea" });
             }
+
+
         }
 
         [HttpPatch("{id}/completar")]
@@ -162,12 +167,5 @@ namespace GestionDeTareas.Controllers
             }
 
         }
-
-        
-        
-
-
-
-
     }
 }

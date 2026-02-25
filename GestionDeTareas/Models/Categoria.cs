@@ -9,10 +9,6 @@ namespace GestionDeTareas.Models
         [Required]
         public required string Nombre { get; set; }
 
-        [Required]
-        public string IdUsuario { get; set; } = null!;
-        public Usuario Usuario { get; set; } = null!;
-
         public List<Tarea>? TareasEnCategoria { get; set; } = new List<Tarea>();
 
         

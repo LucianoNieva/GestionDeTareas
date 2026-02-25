@@ -15,19 +15,17 @@ namespace GestionDeTareas.Controllers
     
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<Usuario> _userManager;
+        private readonly IUsuarioService _usuarioService;
         private readonly ITokenService _tokenService;
         private readonly ILogger<AuthController> _logger;
 
-        public AuthController(UserManager<Usuario> userManager,
-            ITokenService tokenService,
-            ILogger<AuthController> logger)
+        public AuthController(IUsuarioService usuarioService, ITokenService tokenService, ILogger<AuthController> logger)
         {
-            _userManager = userManager;
+            _usuarioService = usuarioService;
             _tokenService = tokenService;
             _logger = logger;
         }
-
+        /*
         [HttpPost("registrar")]
         public async Task<ActionResult<AuthResponseDTO>> Registrar(RegisterDTO registerDTO)
         {
@@ -71,54 +69,31 @@ namespace GestionDeTareas.Controllers
             }
 
 
-        }
+        }*/
 
         [HttpPost("login")]
         public async Task<ActionResult<AuthResponseDTO>> Login(LoginDTO dto)
         {
-            try
+            var (esValido, usuario, estaBloqueado) = await _usuarioService.ValidarPasswordAsync(dto.Email, dto.Password);
+
+            if (estaBloqueado)
+                return Unauthorized(new { message = "Cuenta bloqueada temporalmente por demasiados intentos fallidos." });
+
+            if (!esValido || usuario == null)
+                return Unauthorized(new { message = "Credenciales incorrectas" });
+
+            var token = await _tokenService.GenerarToken(usuario);
+
+            _logger.LogInformation("Usuario inició sesión: {Email}", usuario.Email);
+
+            return Ok(new AuthResponseDTO
             {
-                var usuario = await _userManager.FindByEmailAsync(dto.Email);
-                if (usuario == null)
-                {
-                    return Unauthorized();
-                }
-
-                var esValido = await _userManager.CheckPasswordAsync(usuario, dto.Password);
-                if (!esValido)
-                {
-                    await _userManager.AccessFailedAsync(usuario);
-
-                    if (await _userManager.IsLockedOutAsync(usuario))
-                    {
-                        _logger.LogWarning("Usuario bloqueado temporalmente: {Email}", usuario.Email);
-                        return Unauthorized();
-                    }
-
-                    return Unauthorized();
-                }
-
-                await _userManager.ResetAccessFailedCountAsync(usuario);
-
-                var token = await _tokenService.GenerarToken(usuario);
-
-                _logger.LogInformation("Usuario inició sesión: {Email}", usuario.Email);
-
-                return Ok(new AuthResponseDTO
-                {
-                    Token = token,
-                    Email = usuario.Email!,
-                    Nombre = usuario.Nombre,
-                    Expiracion = DateTime.UtcNow.AddDays(7)
-                });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error al iniciar sesión");
-                return StatusCode(500);
-            }
+                Token = token,
+                Email = usuario.Email!,
+                Nombre = usuario.Nombre,
+                Expiracion = DateTime.UtcNow.AddDays(7)
+            });
         }
-
 
         [HttpPost("setup/roles")]
         public async Task<ActionResult> CrearRoles(
@@ -154,47 +129,15 @@ namespace GestionDeTareas.Controllers
         [HttpPost("setup/crear-admin")]
         public async Task<ActionResult<AuthResponseDTO>> CrearPrimerAdmin(RegisterDTO dto)
         {
-            try
-            {
-                var usuarioExiste = await _userManager.FindByEmailAsync(dto.Email);
-                if (usuarioExiste != null)
-                    return BadRequest(new { message = "El email ya está registrado" });
+            var resultado = await _usuarioService.RegistrarUsuarioAsync(dto, "Admin");
 
-                var usuario = new Usuario
-                {
-                    UserName = dto.Email,
-                    Email = dto.Email,
-                    Nombre = dto.Nombre
-                };
+            if (!resultado.Succeeded)
+                return BadRequest(new { message = "Error al crear admin", errores = resultado.Errors.Select(e => e.Description) });
 
-                var resultado = await _userManager.CreateAsync(usuario, dto.Password);
+            var usuario = await _usuarioService.BuscarPorEmailAsync(dto.Email);
+            var token = await _tokenService.GenerarToken(usuario!);
 
-                if (!resultado.Succeeded)
-                {
-                    var errores = resultado.Errors.Select(e => e.Description);
-                    return BadRequest(new { message = "Error al crear usuario", errores });
-                }
-
-                // ✅ ASIGNAR ROL ADMIN
-                await _userManager.AddToRoleAsync(usuario, "Admin");
-
-                var token = await _tokenService.GenerarToken(usuario);
-
-                _logger.LogInformation("ADMIN creado exitosamente: {Email}", usuario.Email);
-
-                return Ok(new AuthResponseDTO
-                {
-                    Token = token,
-                    Email = usuario.Email!,
-                    Nombre = usuario.Nombre,
-                    Expiracion = DateTime.UtcNow.AddDays(7)
-                });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error al crear admin");
-                return StatusCode(500, new { message = "Error al crear admin" });
-            }
+            return Ok(new AuthResponseDTO { Token = token, Email = usuario!.Email!, Nombre = usuario.Nombre });
         }
     }
 }

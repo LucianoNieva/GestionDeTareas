@@ -14,17 +14,20 @@ namespace GestionDeTareas.Services
         private readonly ICategoryRepository _categoriaRepository;
         private readonly IUsuarioService _userManager;
         private readonly IMapper _mapper;
+        private readonly ICurrentUserService _currentUserService;
 
         public TareaService(
         ITareaRepository tareaRepository,
         ICategoryRepository categoriaRepository,
         IUsuarioService userManager,
-        IMapper mapper)
+        IMapper mapper,
+        ICurrentUserService currentUserService)
         {
             _tareaRepository = tareaRepository;
             _categoriaRepository = categoriaRepository;
             _userManager = userManager;
             _mapper = mapper;
+            _currentUserService = currentUserService;
         }
 
 
@@ -51,11 +54,11 @@ namespace GestionDeTareas.Services
             return _mapper.Map<List<TareaDTO>>(tareas);
         }   
 
-        public async Task<(bool exito, string? error, TareaDTO? tarea)> CrearTarea(CreacionTareaDTO creacionTarea, string userId)
+        public async Task<(bool exito, string? error, TareaDTO? tarea)> CrearTarea(CreacionTareaDTO creacionTarea)
         {
             if(creacionTarea.IdCategoria.HasValue)
             {
-                var categoriaExiste = await _categoriaRepository.ObtenerPorIdYUsuario(creacionTarea.IdCategoria.Value, userId);
+                var categoriaExiste = await _categoriaRepository.ObtenerPorId(creacionTarea.IdCategoria.Value);
 
                 if (categoriaExiste == null) return (false, "La categoria no existe", null);
             }
@@ -69,7 +72,7 @@ namespace GestionDeTareas.Services
             }
 
             var tarea = _mapper.Map<Tarea>(creacionTarea);
-            tarea.IdAdmin = userId;
+            tarea.IdAdmin = _currentUserService.UserId;
 
             await _tareaRepository.Add(tarea);
             await _tareaRepository.Save();
@@ -86,7 +89,7 @@ namespace GestionDeTareas.Services
 
             if (actualizarTareaDTO.IdCategoria.HasValue)
             {
-                var categoriaExiste = await _categoriaRepository.ObtenerPorIdYUsuario(actualizarTareaDTO.IdCategoria.Value, userId);
+                var categoriaExiste = await _categoriaRepository.ObtenerPorId(actualizarTareaDTO.IdCategoria.Value);
 
                 if (categoriaExiste == null)
                 {

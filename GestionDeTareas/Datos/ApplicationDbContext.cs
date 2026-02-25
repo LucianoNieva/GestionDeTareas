@@ -39,14 +39,6 @@ namespace GestionDeTareas.Datos
                 .HasForeignKey(t => t.IdCategoria)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
-
-            // ========== CONFIGURACIÓN DE CATEGORIA ==========
-
-            builder.Entity<Categoria>()
-                .HasOne(c => c.Usuario)
-                .WithMany(u => u.Categorias)
-                .HasForeignKey(c => c.IdUsuario)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

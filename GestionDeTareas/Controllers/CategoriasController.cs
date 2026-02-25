@@ -14,12 +14,12 @@ namespace GestionDeTareas.Controllers
     
     public class CategoriasController : ControllerBase
     {
-        private readonly CategoryService _categoryService;
+        private readonly ICategoryService _categoryService;
         private readonly ICurrentUserService _currentUser;
         private readonly ILogger<CategoriasController> _logger;
 
          public CategoriasController(
-            CategoryService categoryService,
+            ICategoryService categoryService,
             ICurrentUserService currentUser,
             ILogger<CategoriasController> logger)
         {
@@ -29,11 +29,11 @@ namespace GestionDeTareas.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CategoryDTO>>> GetMisCategorias()
+        public async Task<ActionResult<List<CategoryDTO>>> GetCategorias()
         {
            
             
-                var categorias = await _categoryService.ObtenerCategoriasUsuario(_currentUser.UserId);
+                var categorias = await _categoryService.ObtenerTodasLasCategorias();
                 return Ok(categorias);
             
            
@@ -43,24 +43,36 @@ namespace GestionDeTareas.Controllers
         public async Task<ActionResult<CategoryDTO>> GetCategoria(int id)
         {
             
-                var categoria = await _categoryService.ObtenerCategoriaPorId(id, _currentUser.UserId);
+                var categoria = await _categoryService.ObtenerCategoriaPorId(id);
             if (categoria == null)  // ✅ Validación agregada
                 return NotFound(new { message = "Categoría no encontrada" });
             return Ok(categoria);
            
         }
 
+        [HttpGet("{id}/tarea")]
+        public async Task<ActionResult> GetTareasDeCategoria(int id)
+        {
+
+            var resultado = await _categoryService.ObtenerTareasDeCategoria(id);
+            if (resultado == null)
+                return NotFound(new { message = "Categoría no encontrada" });
+            return Ok(resultado);
+
+        }
+
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<CategoryDTO>> CrearCategoria(CategoryCreacionDTO dto)
         {
             try
             {
-                var (exito, error, categoria) = await _categoryService.CrearCategoria(dto, _currentUser.UserId);
+                var (exito, error, categoria) = await _categoryService.CrearCategoriaGlobal(dto);
 
                 if (!exito)
                     return BadRequest(new { message = error });
 
-                _logger.LogInformation("Categoría creada: {CategoriaId} por usuario {UserId}", categoria!.Id, _currentUser.UserId);
+                _logger.LogInformation("Categoría creada: {CategoriaId}}", categoria!.Id);
 
                 return CreatedAtRoute("ObtenerCategoria", new { id = categoria.Id }, categoria);
             }
@@ -72,16 +84,17 @@ namespace GestionDeTareas.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> ActualizarCategoria(int id, CategoryCreacionDTO dto)
         {
             try
             {
-                var (exito, error) = await _categoryService.ActualizarCategoria(id, dto, _currentUser.UserId);
+                var (exito, error) = await _categoryService.ActualizarCategoria(id, dto);
 
                 if (!exito)
                     return NotFound(new { message = error });
 
-                _logger.LogInformation("Categoría actualizada: {CategoriaId} por usuario {UserId}", id, _currentUser.UserId);
+                _logger.LogInformation("Categoría actualizada: {CategoriaId}", id);
 
                 return NoContent();
             }
@@ -94,11 +107,12 @@ namespace GestionDeTareas.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> EliminarCategoria(int id)
         {
             try
             {
-                var (exito, error) = await _categoryService.EliminarCategoria(id, _currentUser.UserId);
+                var (exito, error) = await _categoryService.EliminarCategoria(id);
 
                 if (!exito)
                     return BadRequest(new { message = error });
@@ -114,16 +128,7 @@ namespace GestionDeTareas.Controllers
             }
         }
 
-        [HttpGet("{id}/tarea")]
-        public async Task<ActionResult> GetTareasDeCategoria(int id)
-        {
-            
-                var resultado = await _categoryService.ObtenerTareasDeCategoria(id, _currentUser.UserId);
-            if (resultado == null)  
-                return NotFound(new { message = "Categoría no encontrada" });
-            return Ok(resultado);
-  
-        }
+
 
     }
 }
