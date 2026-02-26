@@ -42,7 +42,7 @@ namespace GestionDeTareas.Services
             }
 
             // Crear categoría
-            var categoria = mapper.Map<Categoria>(dto);
+            var categoria = mapper.Map<Category>(dto);
 
             await categoryRepository.Add(categoria);
             await categoryRepository.Save();

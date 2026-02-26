@@ -2,7 +2,7 @@
 
 namespace GestionDeTareas.Models
 {
-    public class Categoria
+    public class Category
     {
         public int Id { get; set; }
 

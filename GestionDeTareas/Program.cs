@@ -69,7 +69,7 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService >();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICategoryService,CategoryService>();
-builder.Services.AddScoped<TareaService>();
+builder.Services.AddScoped<ITareaService,TareaService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

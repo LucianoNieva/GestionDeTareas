@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestionDeTareas.Services
 {
-    public class TareaService
+    public class TareaService: ITareaService
     {
         private readonly ITareaRepository _tareaRepository;
         private readonly ICategoryRepository _categoriaRepository;

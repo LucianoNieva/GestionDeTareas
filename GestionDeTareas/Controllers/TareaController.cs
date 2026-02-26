@@ -16,17 +16,15 @@ namespace GestionDeTareas.Controllers
     [Authorize]
     public class TareaController : ControllerBase
     {
-        private readonly TareaService _tareaService;
+        private readonly ITareaService _tareaService;
         private readonly ICurrentUserService _currentUser;
         private readonly ILogger<TareaController> _logger;
-        private readonly IUsuarioService _usuarioService;
 
-        public TareaController(TareaService tareaService, ICurrentUserService currentUser, ILogger<TareaController> logger, IUsuarioService usuarioService)
+        public TareaController(ITareaService tareaService, ICurrentUserService currentUser, ILogger<TareaController> logger, IUsuarioService usuarioService)
         {
             _tareaService = tareaService;
             _currentUser = currentUser;
             _logger = logger;
-            _usuarioService = usuarioService;
         }
 
         

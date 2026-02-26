@@ -18,7 +18,7 @@ namespace GestionDeTareas.Models
         public string? IdUsuario { get; set; }
         public Usuario? Usuario { get; set; }
         public int? IdCategoria { get; set; }
-        public Categoria? Categoria { get; set; }
+        public Category? Categoria { get; set; }
 
 
     }

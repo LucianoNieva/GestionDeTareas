@@ -5,30 +5,30 @@ using System.Runtime.CompilerServices;
 
 namespace GestionDeTareas.Repository
 {
-    public class CategoryRepository : Repository<Categoria>, ICategoryRepository
+    public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
         public CategoryRepository(ApplicationDbContext context) : base(context) { }
 
-        public async Task<List<Categoria>> ObtenerTodas()
+        public async Task<List<Category>> ObtenerTodas()
         {
             return await dbSet
                 .OrderBy(c => c.Nombre)
                 .ToListAsync();
         }
 
-        public async Task<Categoria?> ObtenerPorId(int id)
+        public async Task<Category?> ObtenerPorId(int id)
         {
             return await dbSet.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<Categoria?> ObtenerConTareas(int id)
+        public async Task<Category?> ObtenerConTareas(int id)
         {
             return await dbSet
                 .Include(c => c.TareasEnCategoria)
                 .FirstOrDefaultAsync(c => c.Id == id); 
         }
 
-        public async Task<List<Categoria>> ObtenerTodasConTareas()
+        public async Task<List<Category>> ObtenerTodasConTareas()
         {
             return await dbSet
                 .Include(c => c.TareasEnCategoria)

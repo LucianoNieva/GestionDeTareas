@@ -2,12 +2,12 @@
 
 namespace GestionDeTareas.Repository
 {
-    public interface ICategoryRepository : IRepository<Categoria>
+    public interface ICategoryRepository : IRepository<Category>
     {
-        Task<List<Categoria>> ObtenerTodas();
-        Task<Categoria?> ObtenerPorId(int id);
-        Task<Categoria?> ObtenerConTareas(int id);
-        Task<List<Categoria>> ObtenerTodasConTareas();
+        Task<List<Category>> ObtenerTodas();
+        Task<Category?> ObtenerPorId(int id);
+        Task<Category?> ObtenerConTareas(int id);
+        Task<List<Category>> ObtenerTodasConTareas();
         Task<bool> Existe(string nombre);
         Task<bool> ExisteConNombreExcluyendo(string nombre, int idExcluir);
     }

@@ -29,13 +29,13 @@ namespace GestionDeTareas.Utilidades
                 .ForMember(dest => dest.Estado, config => config.MapFrom(src => Enum.Parse<Estado>(src.Estado!)))
                 .ForMember(dest => dest.Prioridad, config => config.MapFrom(src => Enum.Parse<Prioridad>(src.Prioridad!)));
 
-            CreateMap<Categoria, CategoryDTO>()
+            CreateMap<Category, CategoryDTO>()
                 .ForMember(dest => dest.CantidadTareas,
                     opt => opt.MapFrom(src => src.TareasEnCategoria != null
                                               ? src.TareasEnCategoria.Count
                                               : 0));
-            CreateMap<Categoria, CategoryDetailsDTO>();
-            CreateMap<CategoryCreacionDTO, Categoria>();
+            CreateMap<Category, CategoryDetailsDTO>();
+            CreateMap<CategoryCreacionDTO, Category>();
 
             CreateMap<Usuario, UsuarioDTO>()
                 .ForMember(des => des.NombreApellido, config => config.MapFrom(usuario => $"{usuario.Nombre} {usuario.Apellido}")).ReverseMap();
